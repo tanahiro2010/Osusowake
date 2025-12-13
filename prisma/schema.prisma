@@ -20,9 +20,7 @@ model User {
   accounts         Account[]
   amazonTraker     AmazonTraker?
   profile          Profile?
-  productLinks     ProductLink[]
-  linkUseHistories LinkUseHistory[]
-
+  
   @@map("user")
 }
 
@@ -91,7 +89,6 @@ model AmazonTraker {
 
 model ProductLink {
   id             String @id @default(cuid())
-  userId         String
   amazonTrakerId String
   url            String
 
@@ -100,7 +97,6 @@ model ProductLink {
 
   amazonTraker     AmazonTraker     @relation(fields: [amazonTrakerId], references: [id], onDelete: Cascade)
   linkUseHistories LinkUseHistory[]
-  user             User             @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([amazonTrakerId])
 }
@@ -108,11 +104,9 @@ model ProductLink {
 model LinkUseHistory {
   id            String   @id @default(cuid())
   productLinkId String
-  userId        String
   usedAt        DateTime @default(now())
 
   productLink ProductLink @relation(fields: [productLinkId], references: [id], onDelete: Cascade)
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([productLinkId])
 }
