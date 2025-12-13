@@ -1,14 +1,23 @@
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
-import { Link2, MousePointerClick } from "lucide-react";
+import { Link2, MousePointerClick, ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 
 export default async function Dashboard() {
   const session = await auth.api.getSession({
     headers: await headers(),
   })!;
-  const [links, histories] = await prisma.$transaction([
+  const [traker, links, histories] = await prisma.$transaction([
+    prisma.amazonTraker.findFirst({
+      where: {
+        userId: session!.user.id,
+      },
+      select: {
+        id: true,
+      }
+    }),
     prisma.productLink.count({
       where: {
         amazonTraker: {
@@ -71,9 +80,21 @@ export default async function Dashboard() {
       </div>
 
       {/* アクティビティ */}
-      <div className="mt-8 p-6 border border-gray-200 rounded-lg">
-        <h2 className="text-lg font-semibold mb-4">最近のアクティビティ</h2>
-        <p className="text-sm text-gray-500">まだアクティビティがありません</p>
+      <div className={`mt-8 p-6 border rounded-lg ${traker ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
+        <div className="flex items-center justify-between">
+          <p className={`text-sm font-medium ${traker ? "text-green-700" : "text-red-700"}`}>
+            {traker ? "アクティビティは有効です" : "トラッカーIDの設定が必要です"}
+          </p>
+          {!traker && (
+            <Link
+              href="/dashboard/profile"
+              className="inline-flex items-center gap-1 text-sm font-medium text-red-700 hover:text-red-800 transition-colors hover:underline"
+            >
+              設定する
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );
