@@ -27,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#f8efde]`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <PageTransitionClient>
           {children}
         </PageTransitionClient>

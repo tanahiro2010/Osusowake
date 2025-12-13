@@ -10,7 +10,7 @@ export default function DashboardLayout({ children }: ReactProps) {
                 <header className="flex h-14 items-center gap-4 border-b px-6">
                     <SidebarTrigger />
                 </header>
-                <main className="flex-1 p-6">
+                <main className="flex-1 p-6 max-w-4xl mx-auto w-full">
                     {children}
                 </main>
             </SidebarInset>

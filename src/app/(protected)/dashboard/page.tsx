@@ -37,7 +37,7 @@ export default async function Dashboard() {
   ]);
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div>
       {/* ヘッダー */}
       <div className="mb-10">
         <h1 className="text-3xl font-bold tracking-tight">ダッシュボード</h1>

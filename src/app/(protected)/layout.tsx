@@ -9,7 +9,9 @@ export default async function ProtectedLayout({ children }: ReactProps) {
     const session = await auth.api.getSession({ headers: await headers() });
     if (session?.session) {
         return (
-        <SidebarProvider>{ children }</SidebarProvider>
+        <SidebarProvider>
+            { children }
+        </SidebarProvider>
     );
     } else {
         redirect("/auth");
