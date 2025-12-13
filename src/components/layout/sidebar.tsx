@@ -26,8 +26,8 @@ const mainItems = [
     icon: User2,
   },
   {
-    title: "フォロー中",
-    url: "/dashboard/following",
+    title: "寄付管理",
+    url: "/dashboard/donations",
     icon: Users,
   },
 ];
