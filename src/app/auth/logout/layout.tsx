@@ -10,7 +10,7 @@ export async function generateMetadata() {
 export default function LogoutLayout({ children }: ReactProps) {
     return (
         <section>
-            {children}
+            { children }
         </section>
     );
 }
