@@ -20,7 +20,7 @@ model User {
   accounts         Account[]
   amazonTraker     AmazonTraker?
   profile          Profile?
-  
+
   @@map("user")
 }
 
