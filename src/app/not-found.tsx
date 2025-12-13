@@ -1,6 +1,9 @@
+"use client";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function NotFound() {
+    const router = useRouter();
     return (
         <main className="flex min-h-screen flex-col items-center justify-center p-24 w-3/5 mx-auto space-y-5">
             <h1 className="text-2xl font-bold">404 - お探しのページは見つかりませんでした</h1>
@@ -9,7 +12,10 @@ export default function NotFound() {
                 URLをご確認の上、再度お試しください。
             </p>
 
-            <div className="mt-10">
+            <div className="mt-10 flex">
+                <button onClick={() => router.back()} className="mr-4 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-8 rounded-full border border-gray-300 shadow-sm transition-all duration-300 hover:shadow-md">
+                    戻る
+                </button>
                 <Link href="/">
                     <button className="bg-amber-100 hover:bg-amber-200 text-amber-800 font-medium py-3 px-8 rounded-full border border-amber-300 shadow-sm transition-all duration-300 hover:shadow-md">
                         ホームに戻る
