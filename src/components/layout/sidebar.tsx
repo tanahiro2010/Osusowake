@@ -25,11 +25,6 @@ const mainItems = [
     url: "/dashboard/profile",
     icon: User2,
   },
-  {
-    title: "寄付管理",
-    url: "/dashboard/donations",
-    icon: Users,
-  },
 ];
 
 const settingsItems = [
@@ -56,7 +51,7 @@ export function AppSidebar() {
         </Link>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className="flex flex-col items-center justify-between">
         <SidebarGroup>
           <SidebarGroupLabel>メイン</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -74,6 +69,7 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
         <SidebarGroup>
           <SidebarGroupLabel>その他</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -92,6 +88,7 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter className="p-4">
         <SidebarMenu>
           <SidebarMenuItem>
