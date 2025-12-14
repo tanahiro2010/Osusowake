@@ -114,6 +114,8 @@ model LinkUseHistory {
 model Profile {
   id           String  @id @default(cuid())
   userId       String  @unique
+
+  username     String  @default("匿名")
   bio          String?
   twitter_id   String? @unique
   instagram_id String? @unique
