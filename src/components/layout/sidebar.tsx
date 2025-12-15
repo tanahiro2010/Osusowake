@@ -1,6 +1,4 @@
-import { Home, User2, Users, Settings, LogOut } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import { Home, User2, Settings, LogOut } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -13,6 +11,8 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import Image from "next/image";
+import Link from "next/link";
 
 const mainItems = [
   {
