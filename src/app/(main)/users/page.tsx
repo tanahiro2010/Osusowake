@@ -22,7 +22,7 @@ export default async function UsersPage() {
     });
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center px-24 w-3/5 mx-auto space-y-5">
+        <>
             <h1 className="text-3xl font-bold mb-6">ユーザー一覧</h1>
             <ul className="space-y-4">
                 {profiles.length === 0 && (
@@ -36,6 +36,6 @@ export default async function UsersPage() {
                     </li>
                 ))}
             </ul>
-        </main>
+        </>
     )
 }

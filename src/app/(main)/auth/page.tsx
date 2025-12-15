@@ -32,7 +32,7 @@ export default function AuthPage() {
   }, [router]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-24 w-3/5 mx-auto space-y-5">
+    <>
       <h1 className="text-2xl font-bold mb-6">認証ページ</h1>
       <button
         onClick={handleGoogleSignIn}
@@ -41,6 +41,6 @@ export default function AuthPage() {
         <Google className="mr-2" />
         Googleでサインイン
       </button>
-    </main>
+    </>
   );
 }

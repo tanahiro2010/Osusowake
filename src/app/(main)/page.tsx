@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   const iconSize = 200;
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-24 w-3/5 mx-auto space-y-5">
+    <>
       <Image src={`/logo.png`} alt="Icon" width={iconSize} height={iconSize} />
       <h1 className="text-xl">
         ちいさなおすそわけ
@@ -40,6 +40,6 @@ export default function Home() {
           </button>
         </Link>
       </div>
-    </main>
+    </>
   );
 }

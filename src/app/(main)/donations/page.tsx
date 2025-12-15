@@ -58,7 +58,7 @@ export default function DonationPage() {
     });
 
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 w-3/5 mx-auto space-y-5">
+        <>
             <h1 className="text-2xl font-bold mb-6">寄付を始める</h1>
             <form onSubmit={handleCreateDonation} className="w-full max-w-md">
                 <label htmlFor="url" className="block text-lg font-medium mb-2">
@@ -91,6 +91,6 @@ export default function DonationPage() {
                 </p>
                 
             </div>
-        </main>
+        </>
     );
 }
