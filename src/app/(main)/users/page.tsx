@@ -1,8 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
 export async function generateMetadata() {
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
-
     return {
         title: "ユーザー一覧 - おすそわけ",
         description: "あなたの一動作が、誰かの助けになります"
