@@ -3,6 +3,13 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import ProfileUpdateForm from "@/components/layout/profile";
 
+export async function generateMetadata() {
+    return {
+        title: "プロフィール設定 - おすそわけ",
+        description: "おすそわけのプロフィール設定ページです。",
+    };
+}
+
 export default async function ProfilePage() {
     const session = await auth.api.getSession({
         headers: await headers(),
