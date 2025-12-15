@@ -46,7 +46,7 @@ const POST = (async (req: NextRequest) => {
         const amazonUrl = `${uri.protocol}//${uri.host}${uri.pathname}?tag=${selected.trackerId}`;
 
         // 取得した tracker を返す（必要ならここで isUsed を更新する等の処理を追加）
-        const [linkId] = await prisma.$transaction([
+        const [link] = await prisma.$transaction([
             prisma.productLink.create({
                 data: {
                     url: amazonUrl,
@@ -58,7 +58,8 @@ const POST = (async (req: NextRequest) => {
                 data: { isUsed: true },
             })
         ]);
-        return ok({ linkId: linkId.id });
+        console.log("Generated link: ", link);
+        return ok({ id: link.id });
     } catch (e) {
         console.error(e);
         return badRequest("処理中にエラーが発生しました。");
