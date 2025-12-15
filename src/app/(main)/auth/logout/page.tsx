@@ -5,16 +5,17 @@ import { useEffect } from "react";
 
 export default function LogoutPage() {
     const router = useRouter();
-    async function handleLogout() {
-        if (confirm("ログアウトしますか？")) {
-            await authClient.signOut();
-            router.push("/auth");
-        } else {
-            router.back();
-        }
-    }
+
     useEffect(() => {
-        handleLogout();
-    }, []);
+        (async () => {
+            if (confirm("ログアウトしますか？")) {
+                await authClient.signOut();
+                router.push("/auth");
+            } else {
+                router.back();
+            }
+        })();
+    }, [router]);
+
     return null;
 }
