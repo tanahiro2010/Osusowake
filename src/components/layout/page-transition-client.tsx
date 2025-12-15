@@ -1,20 +1,22 @@
 'use client'
-
 import { usePathname } from 'next/navigation'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 
 export default function PageTransitionClient({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname()
-  const [showTopBar, setShowTopBar] = useState(false)
+  const pathname = usePathname();
+  const [showTopBar, setShowTopBar] = useState<boolean>(false);
 
   // 簡易プログレス風の表示：パス名が変わった直後にトップバーを短時間表示する
   useEffect(() => {
-    // pathname が変わるたびに一瞬だけ表示（より高度にするなら Context やイベントで制御）
-    setShowTopBar(true)
-    const t = setTimeout(() => setShowTopBar(false), 450) // 450ms で消す（調整可）
-    return () => clearTimeout(t)
-  }, [pathname])
+    // 非同期に状態変更して即時のカスケードレンダーを避ける
+    const showTimer = setTimeout(() => setShowTopBar(true), 0);
+    const hideTimer = setTimeout(() => setShowTopBar(false), 450); // 450ms で消す（調整可）
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -46,5 +48,5 @@ export default function PageTransitionClient({ children }: { children: React.Rea
         .top-progress.active { width: 82%; } /* 遷移中の見せ方 */
       `}</style>
     </>
-  )
+  );
 }
