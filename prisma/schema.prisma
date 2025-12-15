@@ -16,10 +16,10 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  sessions     Session[]
-  accounts     Account[]
+  sessions      Session[]
+  accounts      Account[]
   AmazonTracker AmazonTracker?
-  profile      Profile?
+  profile       Profile?
 
   @@map("user")
 }
@@ -76,10 +76,11 @@ model Verification {
 }
 
 model AmazonTracker {
-  id        String @id @default(cuid())
-  trackerId String @unique
-  userId    String @unique
-  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        String  @id @default(cuid())
+  trackerId String  @unique
+  userId    String  @unique
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isUsed    Boolean @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,14 +89,14 @@ model AmazonTracker {
 }
 
 model ProductLink {
-  id             String @id @default(cuid())
+  id              String @id @default(cuid())
   AmazonTrackerId String
-  url            String
+  url             String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  AmazonTracker     AmazonTracker     @relation(fields: [AmazonTrackerId], references: [id], onDelete: Cascade)
+  AmazonTracker    AmazonTracker    @relation(fields: [AmazonTrackerId], references: [id], onDelete: Cascade)
   linkUseHistories LinkUseHistory[]
 
   @@index([AmazonTrackerId])
