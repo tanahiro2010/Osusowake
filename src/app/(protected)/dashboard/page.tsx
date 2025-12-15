@@ -4,6 +4,12 @@ import { auth } from "@/lib/auth";
 import { Link2, MousePointerClick, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+export async function generateMetadata() {
+  return {
+    title: "ダッシュボード - おすそわけ",
+    description: "おすそわけのダッシュボードページです。",
+  };
+}
 
 export default async function Dashboard() {
   const session = await auth.api.getSession({
