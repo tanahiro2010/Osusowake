@@ -34,7 +34,7 @@ export default function PageTransitionClient({ children }: { children: React.Rea
           {children}
         </motion.main>
       </AnimatePresence>
-      <style jsx>{`
+      <style jsx global>{`
         .top-progress {
           position: fixed;
           left: 0;
