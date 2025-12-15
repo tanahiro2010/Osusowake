@@ -34,7 +34,7 @@ export default function Home() {
       </div>
 
       <div className="mt-10">
-        <Link href="/donation">
+        <Link href="/donations">
           <button className="bg-amber-100 hover:bg-amber-200 text-amber-800 font-medium py-3 px-8 rounded-full border border-amber-300 shadow-sm transition-all duration-300 hover:shadow-md">
             今すぐ寄付を始める
           </button>
