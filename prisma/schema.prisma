@@ -16,10 +16,10 @@ model User {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  sessions         Session[]
-  accounts         Account[]
-  amazonTraker     AmazonTraker?
-  profile          Profile?
+  sessions     Session[]
+  accounts     Account[]
+  AmazonTracker AmazonTracker?
+  profile      Profile?
 
   @@map("user")
 }
@@ -75,11 +75,11 @@ model Verification {
   @@map("verification")
 }
 
-model AmazonTraker {
-  id       String @id @default(cuid())
-  trakerId String @unique
-  userId   String @unique
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+model AmazonTracker {
+  id        String @id @default(cuid())
+  trackerId String @unique
+  userId    String @unique
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -89,16 +89,16 @@ model AmazonTraker {
 
 model ProductLink {
   id             String @id @default(cuid())
-  amazonTrakerId String
+  AmazonTrackerId String
   url            String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  amazonTraker     AmazonTraker     @relation(fields: [amazonTrakerId], references: [id], onDelete: Cascade)
+  AmazonTracker     AmazonTracker     @relation(fields: [AmazonTrackerId], references: [id], onDelete: Cascade)
   linkUseHistories LinkUseHistory[]
 
-  @@index([amazonTrakerId])
+  @@index([AmazonTrackerId])
 }
 
 model LinkUseHistory {
@@ -112,8 +112,8 @@ model LinkUseHistory {
 }
 
 model Profile {
-  id           String  @id @default(cuid())
-  userId       String  @unique
+  id     String @id @default(cuid())
+  userId String @unique
 
   username     String  @default("匿名")
   bio          String?
