@@ -8,28 +8,28 @@ export default async function ProfilePage() {
         headers: await headers(),
     })!;
     console.log(session)
-    const [profile, traker] = await prisma.$transaction([
+    const [profile, tracker] = await prisma.$transaction([
         prisma.profile.findUnique({
             where: {
                 userId: session!.user.id,
             }
         }),
-        prisma.amazonTraker.findFirst({
+        prisma.amazonTracker.findFirst({
             where: {
                 userId: session!.user.id,
             },
             select: {
                 id: true,
-                trakerId: true,
+                trackerId: true,
             }
         })
     ]);
 
-    console.log([profile, traker]);
+    console.log([profile, tracker]);
 
     return (
         <div>
-            <ProfileUpdateForm profile={profile} trakerId={traker?.trakerId ?? null} />
+            <ProfileUpdateForm profile={profile} trackerId={tracker?.trackerId ?? null} />
         </div>
     );
 }

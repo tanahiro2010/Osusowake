@@ -14,22 +14,22 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
 
 interface ProfileUpdateFormProps {
     profile: Profile | null;
-    trakerId: string | null;
+    trackerId: string | null;
 }
-export default function ProfileUpdateForm({ profile, trakerId }: ProfileUpdateFormProps) {
+export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateFormProps) {
     const router = useRouter();
-    const handleUpdateTraker = (async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleUpdateTracker = (async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const trakerId = formData.get("trakerId") as string;
+        const trackerId = formData.get("trackerId") as string;
 
         try {
-            const response = await fetch("/api/users/traker", {
+            const response = await fetch("/api/users/tracker", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ trakerId })
+                body: JSON.stringify({ trackerId })
             });
             if (response.ok) {
                 alert("トラッカー情報が更新されました。");
@@ -87,15 +87,15 @@ export default function ProfileUpdateForm({ profile, trakerId }: ProfileUpdateFo
             <h1 className="text-3xl font-bold mb-6">プロフィール更新</h1>
             
             <div className="space-y-8">
-                <form onSubmit={handleUpdateTraker} className="space-y-4">
+                <form onSubmit={handleUpdateTracker} className="space-y-4">
                     <h2 className="text-xl font-semibold mb-2">トラッカー情報更新</h2>
                     <div>
                         <label className="block mb-1 font-medium">トラッカーID*:</label>
                         <Input
                             type="text"
-                            name="trakerId"
+                            name="trackerId"
                             placeholder="必須（入力次第有効になります）"
-                            defaultValue={trakerId ?? ""}
+                            defaultValue={trackerId ?? ""}
                         />
                     </div>
                     <Button className="w-full cursor-pointer">更新</Button>

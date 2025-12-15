@@ -9,8 +9,8 @@ export default async function Dashboard() {
   const session = await auth.api.getSession({
     headers: await headers(),
   })!;
-  const [traker, links, histories] = await prisma.$transaction([
-    prisma.amazonTraker.findFirst({
+  const [tracker, links, histories] = await prisma.$transaction([
+    prisma.amazonTracker.findFirst({
       where: {
         userId: session!.user.id,
       },
@@ -20,7 +20,7 @@ export default async function Dashboard() {
     }),
     prisma.productLink.count({
       where: {
-        amazonTraker: {
+        AmazonTracker: {
           userId: session!.user.id,
         }
       }
@@ -28,7 +28,7 @@ export default async function Dashboard() {
     prisma.linkUseHistory.count({
       where: {
         productLink: {
-          amazonTraker: {
+          AmazonTracker: {
             userId: session!.user.id,
           }
         }
@@ -80,12 +80,12 @@ export default async function Dashboard() {
       </div>
 
       {/* アクティビティ */}
-      <div className={`mt-8 p-6 border rounded-lg ${traker ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
+      <div className={`mt-8 p-6 border rounded-lg ${tracker ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"}`}>
         <div className="flex items-center justify-between">
-          <p className={`text-sm font-medium ${traker ? "text-green-700" : "text-red-700"}`}>
-            {traker ? "アクティビティは有効です" : "トラッカーIDの設定が必要です"}
+          <p className={`text-sm font-medium ${tracker ? "text-green-700" : "text-red-700"}`}>
+            {tracker ? "アクティビティは有効です" : "トラッカーIDの設定が必要です"}
           </p>
-          {!traker && (
+          {!tracker && (
             <Link
               href="/dashboard/profile"
               className="inline-flex items-center gap-1 text-sm font-medium text-red-700 hover:text-red-800 transition-colors hover:underline"
