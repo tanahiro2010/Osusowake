@@ -9,8 +9,8 @@ export async function generateMetadata() {
 
 export default function DonationLayout({ children }: ReactProps) {
     return (
-        <section>
+        <>
             {children}
-        </section>
+        </>
     )
 }

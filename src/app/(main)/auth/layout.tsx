@@ -8,5 +8,5 @@ export async function generateMetadata() {
 }
 
 export default async function AuthLayout({ children }: ReactProps) {
-  return <section>{children}</section>;
+  return <>{children}</>;
 }
