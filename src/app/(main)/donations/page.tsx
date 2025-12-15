@@ -10,8 +10,28 @@ export default function DonationPage() {
         const formData = new FormData(e.currentTarget);
         const url = formData.get("url") as string;
         // バリデーションチェック
-        if (!url || !url.startsWith("https://www.amazon.co.jp/dp/")) {
-            alert("有効なAmazon.co.jpの商品URLを入力してください。");
+        if (!url) {
+            alert("URLを入力してください。\n例: https://www.amazon.co.jp/dp/XXXXXXXXXX");
+            return;
+        }
+
+        try {
+            const parsed = new URL(url);
+            const hostname = parsed.hostname.toLowerCase();
+
+            // ホスト名が amazon.<any TLD>（サブドメインの有無は問わない）であること
+            if (!/(^|\.)amazon\.[a-z.]{2,}$/.test(hostname)) {
+                alert("有効なAmazonの商品URLを入力してください。（例: amazon.co.jp, amazon.com など）");
+                return;
+            }
+
+            // 商品ページのパス (/dp/ または /gp/product/) を含むこと
+            if (!(/\/dp\/|\/gp\/product\//.test(parsed.pathname))) {
+                alert("商品ページのURLを入力してください。（/dp/ または /gp/product/ を含むURL）");
+                return;
+            }
+        } catch (e) {
+            alert("有効なURLを入力してください。例: https://www.amazon.co.jp/dp/XXXXXXXXXX");
             return;
         }
 
@@ -25,8 +45,9 @@ export default function DonationPage() {
             });
             if (response.ok) {
                 const data = await response.json();
-                const donationId = data.id;
-                router.push(`/donation/${donationId}`);
+                console.log("Donation created:", data);
+                const donationId = data.data.id;
+                router.push(`/donations/${donationId}`);
             } else {
                 throw new Error("Failed to create donation");
             }
