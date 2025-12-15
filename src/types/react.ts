@@ -1,4 +1,4 @@
-type ReactProps<T = null> = T & { children: React.ReactNode };
+type ReactProps = { children?: React.ReactNode };
 
 export type { ReactProps };
 
