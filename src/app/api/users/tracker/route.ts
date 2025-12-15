@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server";
-import { ProfileInputSchema, PaginationQuerySchema } from "@/types/zod/prisma/profile";
 import { prisma } from "@/lib/prisma";
 import { withAuth } from "@/lib/middleware";
 import { badRequest, ok } from "@/lib/helpers/response";
