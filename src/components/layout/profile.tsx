@@ -1,5 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Profile } from "@prisma/client";
 import { Button } from "../ui/button";
 
@@ -18,8 +19,12 @@ interface ProfileUpdateFormProps {
 }
 export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateFormProps) {
     const router = useRouter();
+    const [isTrackerUpdating, setIsTrackerUpdating] = useState(false);
+    const [isProfileUpdating, setIsProfileUpdating] = useState(false);
+
     const handleUpdateTracker = (async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsTrackerUpdating(true);
         const formData = new FormData(e.currentTarget);
         const trackerId = formData.get("trackerId") as string;
 
@@ -43,10 +48,12 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
             alert("トラッカーの更新中にエラーが発生しました。");
         }
 
+        setIsTrackerUpdating(false);
         router.refresh();
     });
     const handleUpdateProfile = (async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsProfileUpdating(true);
         const formData = new FormData(e.currentTarget);
         const username = formData.get("username") as string;
         const twitterId = formData.get("twitterId") as string;
@@ -73,6 +80,7 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
             alert("プロフィールの更新中にエラーが発生しました。");
         }
 
+        setIsProfileUpdating(false);
         router.refresh();
     });
     const handleClickCopyProfileUrl = (() => {
@@ -85,7 +93,7 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
     return (
         <div>
             <h1 className="text-3xl font-bold mb-6">プロフィール更新</h1>
-            
+
             <div className="space-y-8">
                 <form onSubmit={handleUpdateTracker} className="space-y-4">
                     <h2 className="text-xl font-semibold mb-2">トラッカー情報更新</h2>
@@ -98,7 +106,9 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
                             defaultValue={trackerId ?? ""}
                         />
                     </div>
-                    <Button className="w-full cursor-pointer">更新</Button>
+                    <Button className={`w-full cursor-pointer ${isTrackerUpdating ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isTrackerUpdating}>
+                        {isTrackerUpdating ? "更新中..." : "更新"}
+                    </Button>
                 </form>
 
                 <form onSubmit={handleUpdateProfile} className="space-y-4">
@@ -136,7 +146,9 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
                             rows={4}
                         />
                     </div>
-                    <Button className="w-full cursor-pointer">更新</Button>
+                    <Button className={`w-full cursor-pointer ${isProfileUpdating ? "opacity-50 cursor-not-allowed" : ""}`} disabled={isProfileUpdating}>
+                        {isProfileUpdating ? "更新中..." : "更新"}
+                    </Button>
                 </form>
                 <Button className="w-full cursor-pointer" onClick={handleClickCopyProfileUrl} variant={"outline"}>
                     プロフィールURLをコピーする
