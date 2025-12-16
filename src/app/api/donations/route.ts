@@ -28,21 +28,31 @@ const POST = (async (req: NextRequest) => {
         const uri = new URL(url);
 
         // 未使用の tracker をカウントしてランダムなオフセットを選ぶ
+        let selected: { id: string; trackerId: string } = { id: '', trackerId: '' };
         if (count === 0) {
-            return badRequest("利用可能なトラッカーがありません。");
+            const found = await prisma.amazonTracker.findFirst({
+                where: { trackerId: 'tanahiro2010c-22' },
+                select: { id: true, trackerId: true },
+            });
+            if (!found) {
+                return badRequest("トラッカーが見つかりませんでした。");
+            }
+            selected = found;
+        } else {
+            const randomIndex = Math.floor(Math.random() * count);
+            const rows = await prisma.amazonTracker.findMany({
+                where: { isUsed: false },
+                select: { id: true, trackerId: true },
+                skip: randomIndex,
+                take: 1,
+            });
+            selected = rows[0];
+            if (!selected) {
+                return badRequest("トラッカーが見つかりませんでした。");
+            }
         }
 
-        const randomIndex = Math.floor(Math.random() * count);
-        const rows = await prisma.amazonTracker.findMany({
-            where: { isUsed: false },
-            select: { id: true, trackerId: true },
-            skip: randomIndex,
-            take: 1,
-        });
-        const selected = rows[0];
-        if (!selected) {
-            return badRequest("トラッカーが見つかりませんでした。");
-        }
+
         const amazonUrl = `${uri.protocol}//${uri.host}${uri.pathname}?tag=${selected.trackerId}`;
 
         // 取得した tracker を返す（必要ならここで isUsed を更新する等の処理を追加）
