@@ -66,7 +66,7 @@ export default function ProfileUpdateForm({ profile, trackerId }: ProfileUpdateF
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ username, twitterId, instagramId, bio })
+                body: JSON.stringify({ username, twitter_id: twitterId, instagram_id: instagramId, bio })
             });
             if (response.ok) {
                 alert("プロフィール情報が更新されました。");
