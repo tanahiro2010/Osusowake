@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
+import { DonationModal } from '@/components/modals/donation';
+import { signJwt } from '@/lib/jwt';
 
 interface DonationPageProps {
     params: Promise<{
@@ -9,20 +11,7 @@ interface DonationPageProps {
 
 export async function generateMetadata({ params }: DonationPageProps): Promise<Metadata> {
     const { id } = await params;
-    const donation = await prisma.productLink.findUnique({
-        where: { id },
-        include: { 
-            AmazonTracker: {
-                select: {
-                    user: {
-                        select: {
-                            profile: true,
-                        }
-                    }
-                }
-            } 
-        }
-    });
+    const donation = await fetchDonation(id);
     if (!donation) {
         return {
             title: '無効な寄付リンク - おすそわけ',
@@ -34,36 +23,43 @@ export async function generateMetadata({ params }: DonationPageProps): Promise<M
         description: `こちらは「${donation.url}」への寄付リンクです。ご支援ありがとうございます！`,
         authors: [
             { name: 'おすそわけ', url: 'https://osusowake.app' },
-            { name: donation.AmazonTracker.user.profile?.username || '匿名', url: `https://osusowake.app/users/${donation.AmazonTracker.user.profile?.id}` }
+            { name: donation.AmazonTracker?.user?.profile?.username ?? '匿名', url: `${process.env.NEXT_PUBLIC_APP_URL}/users/${donation.AmazonTracker?.user?.profile?.id ?? ''}` }
         ]
     };
 }
 
 export default async function DonationPage({ params }: DonationPageProps) {
     const { id } = await params;
-    const donation = await prisma.productLink.findUnique({
-        where: { id },
-        include: { 
-            AmazonTracker: {
-                select: {
-                    user: {
-                        select: {
-                            profile: true,
-                        }
-                    }
-                }
-            } 
-        }
-    });
-    if (!donation) {
-        return <div>Donation not found</div>;
-    }
+    const [donation, token] = await Promise.all([fetchDonation(id), signJwt({ donationId: id }, '15m')]);
+    if (!donation) return <div>Donation not found</div>;
+
     return (
         <div>
-            <h1>Donation Details</h1>
-            <p>ID: {donation.id}</p>
-            <p>Link: {donation.url}</p>
-            {/* Add more donation details as needed */}
+            <h1 className="font-bold mb-4 text-center">
+                寄付リンクページ
+            </h1>
+            <iframe src={`/api/proxy?url=${encodeURIComponent(donation.url)}`} width="1000" height="500" />
+            <br />
+            <DonationModal 
+                token={token}
+                donationId={id} 
+                donationUrl={donation.url} 
+                authorInfo={donation.AmazonTracker?.user?.profile ?? null} 
+            />
         </div>
     );
+}
+
+async function fetchDonation(id: string) {
+    return prisma.productLink.findUnique({
+        where: { id },
+        select: {
+            url: true,
+            AmazonTracker: {
+                select: {
+                    user: { select: { profile: true } }
+                }
+            }
+        }
+    });
 }
