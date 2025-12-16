@@ -62,7 +62,7 @@ export default function DonationPage() {
             <h1 className="text-2xl font-bold mb-6">寄付を始める</h1>
             <form onSubmit={handleCreateDonation} className="w-full max-w-md">
                 <label htmlFor="url" className="block text-lg font-medium mb-2">
-                    寄付したい商品のURLを入力してください：
+                    購入したい商品のURLを入力してください：
                 </label>
                 <input
                     type="url"
@@ -86,10 +86,13 @@ export default function DonationPage() {
                     寄付はアフェリエイト収益の一部を通じて行われます。<br />
                     寄付を受け取りたい人は
                     <span className="underline text-amber-600 hover:text-amber-800 cursor-pointer">
-                        <Link href="/auth">こちら</Link>
+                        <Link href="/auth">こちら。</Link>
+                    </span><br /><br />
+                    これまでに作成された寄付リンクの一覧ページは
+                    <span className="underline text-amber-600 hover:text-amber-800 cursor-pointer">
+                        <Link href="/donations/links">こちら。</Link>
                     </span>
                 </p>
-                
             </div>
         </>
     );
