@@ -31,6 +31,7 @@ export default function DonationPage() {
                 return;
             }
         } catch (e) {
+            console.error("Invalid URL:", e);
             alert("有効なURLを入力してください。例: https://www.amazon.co.jp/dp/XXXXXXXXXX");
             return;
         }

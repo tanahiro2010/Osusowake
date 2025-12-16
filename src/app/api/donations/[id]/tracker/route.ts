@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { ok, notFound, unauthorized, serverError } from "@/lib/helpers/response";
+import { ok, unauthorized, serverError } from "@/lib/helpers/response";
 import { verifyJwt } from "@/lib/jwt";
 
 interface DonationPageContext {
@@ -27,6 +27,7 @@ const POST = (async (req: NextRequest, context: DonationPageContext) => {
         });
         return ok({ history }, "Donation link usage tracked");
     } catch (error) {
+        console.error("Error tracking donation link usage:", error);
         return serverError('Donation link not found');
     }
 });
