@@ -7,11 +7,11 @@ interface API_DOC {
     request?: {
         headers?: Record<string, string>;
         queryParams?: Record<string, string>;
-        body?: any;
+        body?: Record<string, any> | string;
     };
     response: {
         status: number;
-        body: any;
+        body: Record<string, any> | string;
     };
 }
 
