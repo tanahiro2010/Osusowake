@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { prisma } from '@/lib/prisma';
-import { DonationModal } from '@/components/modals/donation';
+import { DonationModal } from '@/components/modal/donation';
 import { signJwt } from '@/lib/jwt';
 
 interface DonationPageProps {
