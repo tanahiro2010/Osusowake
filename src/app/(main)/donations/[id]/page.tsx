@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: DonationPageProps): Promise<M
         title: `寄付リンク - おすそわけ`,
         description: `こちらは「${donation.url}」への寄付リンクです。ご支援ありがとうございます！`,
         authors: [
-            { name: 'おすそわけ', url: 'https://osusowake.app' },
+            { name: 'おすそわけ', url: process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000' },
             { name: donation.AmazonTracker?.user?.profile?.username ?? '匿名', url: `${process.env.NEXT_PUBLIC_APP_URL}/users/${donation.AmazonTracker?.user?.profile?.id ?? ''}` }
         ]
     };

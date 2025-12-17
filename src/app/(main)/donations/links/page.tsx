@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
         title: `寄付リンク一覧 - おすそわけ`,
         description: `これまでに作成された寄付リンクの一覧ページです。ご支援ありがとうございます！`,
         authors: [
-            { name: "おすそわけ", url: "https://osusowake.app" }
+            { name: "おすそわけ", url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000" }
         ]
     };
 }
